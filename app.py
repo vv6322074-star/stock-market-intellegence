@@ -74,10 +74,8 @@ def show_analysis(df, name, currency):
 
     volatility = df["Daily_Return"].std()
     st.metric("Daily Volatility", f"{volatility:.2f}%")
-st.subheader("High & Low Stock Price Analysis")
-
+    st.subheader("High & Low Stock Price Analysis")
     c1, c2 = st.columns(2)
-
     c1.metric(
         "Highest Stock Price",
         f"{currency}{df['High'].max():.2f}"
