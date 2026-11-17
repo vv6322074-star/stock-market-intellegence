@@ -12,11 +12,13 @@ st.set_page_config(
 # Load data
 tcs = pd.read_csv("tcs.csv")
 apple = pd.read_csv("apple.csv")
-
 for df in [tcs, apple]:
     df["Date"] = pd.to_datetime(df["Date"])
     df.sort_values("Date", inplace=True)
 
+    df["Moving_Average"] = df["Close"].rolling(window=7).mean()
+
+    df["Daily_Return"] = df["Close"].pct_change() * 100
 # Styling
 st.markdown("""
 <style>
