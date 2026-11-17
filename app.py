@@ -74,7 +74,25 @@ def show_analysis(df, name, currency):
 
     volatility = df["Daily_Return"].std()
     st.metric("Daily Volatility", f"{volatility:.2f}%")
+st.subheader("High & Low Stock Price Analysis")
 
+    c1, c2 = st.columns(2)
+
+    c1.metric(
+        "Highest Stock Price",
+        f"{currency}{df['High'].max():.2f}"
+    )
+
+    c2.metric(
+        "Lowest Stock Price",
+        f"{currency}{df['Low'].min():.2f}"
+    )
+
+    st.subheader("Daily High & Low Price Trend")
+
+    st.line_chart(
+        df.set_index("Date")[["High", "Low"]]
+    )
     st.download_button(
         "Download CSV",
         df.to_csv(index=False),
