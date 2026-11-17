@@ -10,8 +10,8 @@ st.set_page_config(
 )
 
 # Load data
-tcs = pd.read_csv("/content/tcs.csv")
-apple = pd.read_csv("/content/apple.csv")
+tcs = pd.read_csv("tcs.csv")
+apple = pd.read_csv("apple.csv")
 
 for df in [tcs, apple]:
     df["Date"] = pd.to_datetime(df["Date"])
