@@ -167,6 +167,25 @@ def show_analysis(df, name, currency):
         file_name=name.lower().replace(" ", "_") + ".csv",
         mime="text/csv"
     )
+
+        st.markdown("---")
+        st.subheader("🤖 AI-Based 7-Day Stock Price Prediction")
+
+        predictions = predict_stock_price(stock_data)
+
+        prediction_df = pd.DataFrame({
+            "Day": [f"Day {i}" for i in range(1, 8)],
+            "Predicted Price": predictions
+        })
+
+        st.line_chart(
+            prediction_df.set_index("Day")["Predicted Price"]
+        )
+
+        st.caption(
+            "These are model-based estimates from historical prices, "
+            "not guaranteed future prices."
+        )
 # Home
 if page == "Home":
     st.title("📈 Stock Market Intelligence")
