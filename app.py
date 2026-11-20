@@ -49,10 +49,10 @@ def predict_stock_price(stock_data):
 
 import numpy as np
 
-st.set_page_config(
+    st.set_page_config(
     st.markdown("""
-<style>
-.stApp {
+    <style>
+    .stApp {
     background: linear-gradient(135deg, #0f172a, #172554);
     color: white;
 }
