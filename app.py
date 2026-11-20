@@ -1,6 +1,30 @@
 
 import streamlit as st
 import pandas as pd
+import yfinance as yf
+companies = {
+    "TCS": "TCS.NS",
+    "Apple": "AAPL",
+    "Reliance": "RELIANCE.NS",
+    "Infosys": "INFY.NS",
+    "HDFC Bank": "HDFCBANK.NS",
+    "Microsoft": "MSFT",
+    "Amazon": "AMZN"
+}
+@st.cache_data(ttl=3600)
+def get_stock_data(ticker):
+    stock = yf.download(
+        ticker,
+        period="1y",
+        interval="1d",
+        progress=False
+    )
+
+    if not stock.empty:
+        stock.columns = stock.columns.get_level_values(0)
+        stock = stock.reset_index()
+
+    return stock
 import numpy as np
 
 st.set_page_config(
