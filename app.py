@@ -49,10 +49,15 @@ def predict_stock_price(stock_data):
 
 import numpy as np
 
-    st.set_page_config(
-    st.markdown("""
-    <style>
-    .stApp {
+st.set_page_config(
+    page_title="Stock Price Analysis",
+    page_icon="📈",
+    layout="wide"
+) 
+
+st.markdown("""
+<style>
+.stApp {
     background: linear-gradient(135deg, #0f172a, #172554);
     color: white;
 }
@@ -67,43 +72,10 @@ div[data-testid="stMetric"] {
     border-radius: 12px;
     border: 1px solid #334155;
 }
+</style>
+""", unsafe_allow_html=True)
 
-.stButton > button {
-    background: #2563eb;
-    color: white;
-    border-radius: 8px;
-    border: none;
-}
-</style>
-""", unsafe_allow_html=True)
-    page_title="Stock Price Analysis",
-    page_icon="📈",
-    layout="wide"
-)
-st.markdown("""
-<style>
-.stApp {
-    background-color: #F5F7FA;
-}
-h1, h2, h3 {
-    color: #173B35;
-}
-.stMetric {
-    background-color: white;
-    padding: 15px;
-    border-radius: 12px;
-    border: 1px solid #E1E8E5;
-}
-.stButton button {
-    background-color: #176B55;
-    color: white;
-    border-radius: 8px;
-}
-[data-testid="stSidebar"] {
-    background-color: #EAF2EF;
-}
-</style>
-""", unsafe_allow_html=True)
+
 
 # Load data
 tcs = pd.read_csv("tcs.csv")
