@@ -26,6 +26,27 @@ def get_stock_data(ticker):
         stock = stock.reset_index()
 
     return stock
+
+def predict_stock_price(stock_data):
+    data = stock_data[["Close"]].dropna().copy()
+
+    data["Day"] = range(len(data))
+
+    X = data[["Day"]]
+    y = data["Close"]
+
+    model = LinearRegression()
+    model.fit(X, y)
+
+    future_days = pd.DataFrame({
+        "Day": range(len(data), len(data) + 7)
+    })
+
+    predictions = model.predict(future_days)
+
+    return predictions
+
+
 import numpy as np
 
 st.set_page_config(
