@@ -340,7 +340,7 @@ elif page == "Explore Companies":
             stock_data.set_index(date_column)["Close"]
         )
         
-st.markdown("---")
+        st.markdown("---")
         st.subheader("🤖 AI-Based 7-Day Stock Price Prediction")
 
         predictions = predict_stock_price(stock_data)
