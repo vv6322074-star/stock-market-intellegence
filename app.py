@@ -145,31 +145,56 @@ def show_analysis(df, name, currency):
         file_name=name.lower().replace(" ", "_") + ".csv",
         mime="text/csv"
     )
-
 # Home
 if page == "Home":
-    st.title("📈 STOCK PRICE ANALYSIS USING PYTHON")
-    st.caption("Analyze • Compare • Understand")
+    st.title("📈 Stock Market Intelligence")
+    st.caption("Your Smart Platform to Explore, Analyze & Compare Stocks")
 
-    st.subheader("Company Overview")
+    st.markdown("---")
 
-    c1, c2 = st.columns(2)
+    st.subheader("📊 Market Overview")
+
+    c1, c2, c3, c4 = st.columns(4)
 
     with c1:
-        st.metric("TCS Latest Price",
-                  f"₹{tcs['Close'].dropna().iloc[-1]:.2f}")
+        st.metric(
+            "TCS Price",
+            f"₹{tcs['Close'].dropna().iloc[-1]:.2f}"
+        )
 
     with c2:
-        st.metric("Apple Latest Price",
-                  f"${apple['Close'].dropna().iloc[-1]:.2f}")
+        st.metric(
+            "Apple Price",
+            f"${apple['Close'].dropna().iloc[-1]:.2f}"
+        )
 
-    st.subheader("TCS Stock Price Trend")
-    st.line_chart(tcs.set_index("Date")["Close"])
+    with c3:
+        st.metric(
+            "TCS Daily Return",
+            f"{tcs['Daily_Return'].dropna().iloc[-1]:.2f}%"
+        )
 
-    st.subheader("Apple Stock Price Trend")
-    st.line_chart(apple.set_index("Date")["Close"])
+    with c4:
+        st.metric(
+            "Apple Daily Return",
+            f"{apple['Daily_Return'].dropna().iloc[-1]:.2f}%"
+        )
 
-    st.subheader("Comparison Overview")
+    st.markdown("---")
+
+    st.subheader("📈 Stock Performance")
+
+    tab1, tab2 = st.tabs(["TCS", "Apple"])
+
+    with tab1:
+        st.line_chart(tcs.set_index("Date")["Close"])
+
+    with tab2:
+        st.line_chart(apple.set_index("Date")["Close"])
+
+    st.markdown("---")
+
+    st.subheader("⚖️ Company Comparison")
 
     comparison = pd.DataFrame({
         "TCS": [
@@ -184,7 +209,9 @@ if page == "Home":
 
     st.bar_chart(comparison)
 
-    st.subheader("Correlation Analysis")
+    st.markdown("---")
+
+    st.subheader("🔗 Correlation Analysis")
 
     joined = pd.merge(
         tcs[["Date", "Daily_Return"]],
@@ -198,6 +225,11 @@ if page == "Home":
     )
 
     st.metric("TCS vs Apple Correlation", f"{corr:.4f}")
+
+    st.caption(
+        "Note: Prices are based on available historical stock data."
+    )
+
 # Explore Companies
 elif page == "Explore Companies":
     st.title("📊 Explore Companies")
