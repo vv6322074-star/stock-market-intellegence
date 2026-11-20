@@ -50,6 +50,32 @@ def predict_stock_price(stock_data):
 import numpy as np
 
 st.set_page_config(
+    st.markdown("""
+<style>
+.stApp {
+    background: linear-gradient(135deg, #0f172a, #172554);
+    color: white;
+}
+
+h1, h2, h3 {
+    color: #60a5fa;
+}
+
+div[data-testid="stMetric"] {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid #334155;
+}
+
+.stButton > button {
+    background: #2563eb;
+    color: white;
+    border-radius: 8px;
+    border: none;
+}
+</style>
+""", unsafe_allow_html=True)
     page_title="Stock Price Analysis",
     page_icon="📈",
     layout="wide"
