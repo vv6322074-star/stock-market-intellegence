@@ -32,6 +32,30 @@ st.set_page_config(
     page_icon="📈",
     layout="wide"
 )
+st.markdown("""
+<style>
+.stApp {
+    background-color: #F5F7FA;
+}
+h1, h2, h3 {
+    color: #173B35;
+}
+.stMetric {
+    background-color: white;
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid #E1E8E5;
+}
+.stButton button {
+    background-color: #176B55;
+    color: white;
+    border-radius: 8px;
+}
+[data-testid="stSidebar"] {
+    background-color: #EAF2EF;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # Load data
 tcs = pd.read_csv("tcs.csv")
