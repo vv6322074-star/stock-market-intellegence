@@ -189,11 +189,24 @@ if page == "Home":
         ("Amazon", "📦", "AMZN")
     ]
 
-    for index, (name, icon, ticker) in enumerate(company_names):
+for index, (name, icon, ticker) in enumerate(company_names):
         with company_columns[index % 4]:
-            st.markdown(f"### {icon} {name}")
-            st.caption(ticker)
-
+            st.markdown(
+                f"""
+                <div style="
+                    background: #1e293b;
+                    padding: 20px;
+                    border-radius: 15px;
+                    border: 1px solid #334155;
+                    text-align: center;
+                    margin-bottom: 15px;
+                ">
+                    <h3 style="color: #60a5fa;">{icon} {name}</h3>
+                    <p style="color: #cbd5e1;">{ticker}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
     c1, c2, c3, c4 = st.columns(4)
 
     with c1:
