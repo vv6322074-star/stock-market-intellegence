@@ -69,8 +69,8 @@ div[data-testid="stMetric"] {
 st.sidebar.title("📈 Stock Analysis")
 page = st.sidebar.radio(
     "Navigation",
-    ["Home", "TCS Analysis", "Apple Analysis",
-     "Comparison", "About Project"]
+  ["Home", "TCS Analysis", "Apple Analysis",
+ "Explore Companies", "Comparison", "About Project"] 
 )
 
 st.sidebar.markdown("---")
@@ -174,7 +174,48 @@ if page == "Home":
     )
 
     st.metric("TCS vs Apple Correlation", f"{corr:.4f}")
+# Explore Companies
+elif page == "Explore Companies":
+    st.title("📊 Explore Companies")
+    st.caption("Explore historical stock prices")
 
+    company_name = st.selectbox(
+        "Select Company",
+        list(companies.keys())
+    )
+
+    ticker = companies[company_name]
+    stock_data = get_stock_data(ticker)
+
+    if stock_data.empty:
+        st.warning("Stock data is not available right now.")
+    else:
+        date_column = "Date" if "Date" in stock_data.columns else "Datetime"
+
+        st.subheader(company_name + " Stock Price")
+        st.metric(
+            "Latest Closing Price",
+            f"{stock_data['Close'].dropna().iloc[-1]:.2f}"
+        )
+
+        st.line_chart(
+            stock_data.set_index(date_column)["Close"]
+        )
+
+        stock_data["Daily_Return"] = (
+            stock_data["Close"].pct_change() * 100
+        )
+
+        st.subheader("Daily Returns")
+        st.line_chart(
+            stock_data.set_index(date_column)["Daily_Return"]
+        )
+
+        st.subheader("Risk Analysis")
+        st.metric(
+            "Daily Volatility",
+            f"{stock_data['Daily_Return'].std():.2f}%"
+        )
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
