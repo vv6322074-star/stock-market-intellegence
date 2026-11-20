@@ -153,6 +153,24 @@ if page == "Home":
     st.markdown("---")
 
     st.subheader("📊 Market Overview")
+    st.subheader("🏢 Explore Top Companies")
+
+    company_columns = st.columns(4)
+
+    company_names = [
+        ("TCS", "🇮🇳", "TCS.NS"),
+        ("Apple", "🍎", "AAPL"),
+        ("Reliance", "🇮🇳", "RELIANCE.NS"),
+        ("Infosys", "💻", "INFY.NS"),
+        ("HDFC Bank", "🏦", "HDFCBANK.NS"),
+        ("Microsoft", "🪟", "MSFT"),
+        ("Amazon", "📦", "AMZN")
+    ]
+
+    for index, (name, icon, ticker) in enumerate(company_names):
+        with company_columns[index % 4]:
+            st.markdown(f"### {icon} {name}")
+            st.caption(ticker)
 
     c1, c2, c3, c4 = st.columns(4)
 
