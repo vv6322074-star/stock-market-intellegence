@@ -251,7 +251,7 @@ if page == "Home":
 # Explore Companies
 elif page == "Explore Companies":
     st.title("📊 Explore Companies")
-    st.caption("Explore historical stock prices")
+    st.caption("Explore stocks, track price movements and understand market risk.")
 
     company_name = st.selectbox(
         "Select Company",
@@ -263,32 +263,74 @@ elif page == "Explore Companies":
 
     if stock_data.empty:
         st.warning("Stock data is not available right now.")
+
     else:
         date_column = "Date" if "Date" in stock_data.columns else "Datetime"
-
-        st.subheader(company_name + " Stock Price")
-        st.metric(
-            "Latest Closing Price",
-            f"{stock_data['Close'].dropna().iloc[-1]:.2f}"
-        )
-
-        st.line_chart(
-            stock_data.set_index(date_column)["Close"]
-        )
 
         stock_data["Daily_Return"] = (
             stock_data["Close"].pct_change() * 100
         )
 
-        st.subheader("Daily Returns")
+        valid_prices = stock_data["Close"].dropna()
+
+        latest_price = valid_prices.iloc[-1]
+        previous_price = valid_prices.iloc[-2] if len(valid_prices) > 1 else latest_price
+
+        daily_change = latest_price - previous_price
+
+        daily_change_percent = (
+            (daily_change / previous_price) * 100
+            if previous_price != 0 else 0
+        )
+
+        currency = "₹" if ticker.endswith(".NS") else "$"
+
+        st.subheader(company_name + " Stock Overview")
+
+        c1, c2, c3 = st.columns(3)
+
+        with c1:
+            st.metric(
+                "Latest Available Close",
+                f"{currency}{latest_price:.2f}"
+            )
+
+        with c2:
+            st.metric(
+                "Daily Change",
+                f"{currency}{daily_change:.2f}",
+                f"{daily_change_percent:.2f}%"
+            )
+
+        with c3:
+            st.metric(
+                "Daily Volatility",
+                f"{stock_data['Daily_Return'].std():.2f}%"
+            )
+
+        st.markdown("---")
+
+        st.subheader("📈 Stock Price Trend")
+
+        st.line_chart(
+            stock_data.set_index(date_column)["Close"]
+        )
+
+        st.subheader("📊 Daily Returns")
+
         st.line_chart(
             stock_data.set_index(date_column)["Daily_Return"]
         )
 
-        st.subheader("Risk Analysis")
-        st.metric(
-            "Daily Volatility",
-            f"{stock_data['Daily_Return'].std():.2f}%"
+        st.subheader("⚠️ Risk Analysis")
+
+        st.write(
+            "Daily volatility measures how much the stock returns fluctuate."
+        )
+
+        st.info(
+            "Higher volatility indicates greater price fluctuation. "
+            "This is historical analysis, not a guarantee of future performance."
         )
 # TCS
 elif page == "TCS Analysis":
