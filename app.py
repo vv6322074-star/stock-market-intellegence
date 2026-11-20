@@ -2,6 +2,7 @@
 import streamlit as st
 import pandas as pd
 import yfinance as yf
+from sklearn.linear_model import LinearRegression
 companies = {
     "TCS": "TCS.NS",
     "Apple": "AAPL",
