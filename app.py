@@ -225,10 +225,17 @@ def show_analysis(df, name, currency):
         mime="text/csv"
     )
 
+mime="text/csv"
+    )
+
 if "watchlist" not in st.session_state:
     st.session_state["watchlist"] = []  
-    if "price_alerts" not in st.session_state:
+if "price_alerts" not in st.session_state:
     st.session_state["price_alerts"] = []
+# Home
+if page == "Home":
+    st.title("📈 Stock Market Intelligence")
+    st.caption("Your Smart Platform to Explore, Analyze & Compare Stocks")
 # Home
 if page == "Home":
     st.title("📈 Stock Market Intelligence")
