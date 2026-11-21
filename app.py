@@ -629,7 +629,41 @@ elif page == "Comparison":
         "Correlation",
         f"{joined['Daily_Return_TCS'].corr(joined['Daily_Return_Apple']):.4f}"
     )
+# Company Comparison
+elif page == "Comparison":
+    st.title("📊 Company Comparison Dashboard")
 
+    selected_companies = st.multiselect(
+        "Select Companies to Compare",
+        list(companies.keys()),
+        default=["TCS", "Apple"]
+    )
+
+    if selected_companies:
+        comparison_data = {}
+
+        for company in selected_companies:
+            ticker = companies[company]
+            data = get_stock_data(ticker)
+
+            if not data.empty:
+                comparison_data[company] = data.set_index("Date")["Close"]
+
+        if comparison_data:
+            comparison_df = pd.DataFrame(comparison_data)
+
+            st.subheader("📈 Stock Price Comparison")
+            st.line_chart(comparison_df)
+
+            st.subheader("📋 Latest Closing Prices")
+            st.dataframe(
+                comparison_df.iloc[-1].rename("Closing Price"),
+                use_container_width=True
+            )
+        else:
+            st.warning("Comparison data is unavailable.")
+    else:
+        st.info("Please select at least one company.")
 # About
 elif page == "About Project":
     st.title("ℹ️ About This Project")
