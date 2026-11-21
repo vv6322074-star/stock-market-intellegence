@@ -112,7 +112,7 @@ div[data-testid="stMetric"] {
 # Sidebar
 if "pending_page" in st.session_state:
     st.session_state["page_navigation"] 
-    = st.session_state.pop("pending_page")
+= st.session_state.pop("pending_page")
 
 st.sidebar.title("📈 Stock Analysis")
 page = st.sidebar.radio(
