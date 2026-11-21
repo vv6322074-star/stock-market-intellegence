@@ -111,8 +111,6 @@ div[data-testid="stMetric"] {
 
 # Sidebar
 st.sidebar.title("📈 Stock Analysis")
-# Sidebar
-st.sidebar.title("📈 Stock Analysis")
 
 page = st.sidebar.radio(
     "Navigation",
@@ -125,7 +123,6 @@ page = st.sidebar.radio(
         "About Project"
     ],
     key="page_navigation"
-)
 )
 
 st.sidebar.markdown("---")
