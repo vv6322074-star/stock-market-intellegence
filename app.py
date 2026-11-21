@@ -260,6 +260,14 @@ if page == "Home":
         ("Microsoft", "🪟", "MSFT"),
         ("Amazon", "📦", "AMZN")
     ]
+    st.subheader("🔍 Search Your Company")
+
+    search_query = st.text_input("Search company")
+
+    filtered_companies = [
+        company for company in company_names
+        if search_query.lower() in company[0].lower()
+    ]
 
     for index, (name, icon, ticker) in enumerate(filtered_companies):
         with company_columns[index % 4]:
