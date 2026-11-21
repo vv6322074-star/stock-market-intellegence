@@ -225,7 +225,8 @@ def show_analysis(df, name, currency):
         mime="text/csv"
     )
 
-       
+if "watchlist" not in st.session_state:
+    st.session_state["watchlist"] = []       
 # Home
 if page == "Home":
     st.title("📈 Stock Market Intelligence")
@@ -234,6 +235,14 @@ if page == "Home":
     st.markdown("---")
 
     st.subheader("📊 Market Overview")
+    st.markdown("---")
+st.subheader("⭐ My Watchlist")
+
+if st.session_state["watchlist"]:
+    for stock in st.session_state["watchlist"]:
+        st.write("⭐", stock)
+else:
+    st.info("Your watchlist is empty. Add your favourite companies!")
     market_cols = st.columns(4)
 
     with market_cols[0]:
@@ -287,6 +296,10 @@ if page == "Home":
                 """,
                 unsafe_allow_html=True
             )
+            if st.button("⭐ Add to Watchlist", key="watch_" + name):
+                if name not in st.session_state["watchlist"]:
+                    st.session_state["watchlist"].append(name)
+                    st.success(name + " added to Watchlist!")
             if st.button("Explore " +
                 name, key="explore_" + name, use_container_width=True):
                 st.session_state["pending_page"] = "Explore Companies"
