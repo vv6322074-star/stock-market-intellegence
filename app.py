@@ -115,6 +115,7 @@ page = st.sidebar.radio(
     "Navigation",
   ["Home", "TCS Analysis", "Apple Analysis",
  "Explore Companies", "Comparison", "About Project"] 
+    key="page_navigation",
 )
 
 st.sidebar.markdown("---")
