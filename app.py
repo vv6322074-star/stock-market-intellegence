@@ -261,7 +261,7 @@ if page == "Home":
         ("Amazon", "📦", "AMZN")
     ]
 
-    for index, (name, icon, ticker) in enumerate(company_names):
+    for index, (name, icon, ticker) in enumerate(filtered_companies):
         with company_columns[index % 4]:
             st.markdown(
                 f"""
