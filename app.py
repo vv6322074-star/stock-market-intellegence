@@ -290,7 +290,7 @@ if page == "Home":
         key="target_price"
     )
 
-   if st.button("Set Price Alert"):
+    if st.button("Set Price Alert"):
         existing_alert = next(
             (alert for alert in st.session_state["price_alerts"]
              if alert["company"] == alert_company),
