@@ -228,11 +228,11 @@ if page == "Home":
                 """,
                 unsafe_allow_html=True
             )
-            if st.button(f"Explore      
-{name}", key=f"explore_{name}",
+            if st.button("Explore " +
+name, key="explore_" + name,
 use_container_width=True):
-            
-st.session_state["pending_page"] = 
+    
+st.session_state["pending_page"] =
 "Explore Companies"
 
 st.session_state["selected_company"] =
