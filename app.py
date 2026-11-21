@@ -175,6 +175,19 @@ if page == "Home":
     st.markdown("---")
 
     st.subheader("📊 Market Overview")
+    market_cols = st.columns(4)
+
+    with market_cols[0]:
+        st.metric("Companies Tracked", "7")
+
+    with market_cols[1]:
+        st.metric("Analysis Period", "1 Year")
+
+    with market_cols[2]:
+        st.metric("Prediction", "7 Days")
+
+    with market_cols[3]:
+        st.metric("Data Type", "Historical")
     st.subheader("🏢 Explore Top Companies")
 
     company_columns = st.columns(4)
