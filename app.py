@@ -290,12 +290,22 @@ if page == "Home":
         key="target_price"
     )
 
-    if st.button("Set Price Alert"):
+   if st.button("Set Price Alert"):
+    existing_alert = next(
+        (alert for alert in st.session_state["price_alerts"]
+         if alert["company"] == alert_company),
+        None
+    )
+
+    if existing_alert:
+        existing_alert["target"] = target_price
+        st.success(f"{alert_company} price alert updated!")
+    else:
         st.session_state["price_alerts"].append({
             "company": alert_company,
             "target": target_price
         })
-        st.success("Price alert added successfully!")
+        st.success(f"{alert_company} price alert added!")
 
     if st.session_state["watchlist"]:
         for stock in st.session_state["watchlist"]:
