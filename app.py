@@ -61,6 +61,25 @@ def check_price_alerts():
                 )
                 
 def predict_stock_price(stock_data):
+def predict_stock_price(stock_data):
+    data = stock_data[["Close"]].dropna().copy()
+
+    data["Day"] = range(len(data))
+
+    X = data[["Day"]]
+    y = data["Close"]
+
+    model = LinearRegression()
+    model.fit(X, y)
+
+    future_days = pd.DataFrame({
+        "Day": range(len(data), len(data) + 7)
+    })
+
+    predictions = model.predict(future_days)
+
+    return predictions
+
 def generate_stock_insights(stock_data, company_name):
     close = stock_data["Close"].dropna()
 
@@ -84,23 +103,6 @@ def generate_stock_insights(stock_data, company_name):
         insights.append("No price change compared to previous close.")
 
     return insights
-    data = stock_data[["Close"]].dropna().copy()
-
-    data["Day"] = range(len(data))
-
-    X = data[["Day"]]
-    y = data["Close"]
-
-    model = LinearRegression()
-    model.fit(X, y)
-
-    future_days = pd.DataFrame({
-        "Day": range(len(data), len(data) + 7)
-    })
-
-    predictions = model.predict(future_days)
-
-    return predictions
 
 
 import numpy as np
