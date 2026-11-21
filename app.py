@@ -513,6 +513,32 @@ elif page == "Explore Companies":
         st.metric("Latest Closing Price", f"{latest_price:.2f}")
         st.subheader("Stock Price History")
         st.line_chart(stock_data.set_index("Date")["Close"])
+        st.subheader("📊 Additional Stock Charts")
+
+        chart_tab1, chart_tab2, chart_tab3 = st.tabs([
+            "Area Chart",
+            "Volume Chart",
+            "Daily Returns"
+        ])
+
+        with chart_tab1:
+            st.area_chart(
+                stock_data.set_index("Date")["Close"]
+            )
+
+        with chart_tab2:
+            if "Volume" in stock_data.columns:
+                st.bar_chart(
+                    stock_data.set_index("Date")["Volume"]
+                )
+
+        with chart_tab3:
+            stock_data["Daily Return (%)"] = (
+                stock_data["Close"].pct_change() * 100
+            )
+            st.line_chart(
+                stock_data.set_index("Date")["Daily Return (%)"]
+            )
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
