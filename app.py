@@ -42,6 +42,23 @@ def get_stock_data(ticker):
         stock = stock.reset_index()
 
     return stock
+    def check_price_alerts():
+    for alert in st.session_state["price_alerts"]:
+        ticker = companies[alert["company"]]
+        stock_data = get_stock_data(ticker)
+
+        if not stock_data.empty:
+            current_price = float(stock_data["Close"].iloc[-1])
+            target_price = alert["target"]
+
+            if current_price >= target_price:
+                st.success(
+                    f"🔔 {alert['company']} reached your target price!"
+                )
+            else:
+                st.info(
+                    f"{alert['company']}: Current ₹{current_price:.2f} | Target ₹{target_price:.2f}"
+                )
 
 def predict_stock_price(stock_data):
     data = stock_data[["Close"]].dropna().copy()
@@ -250,6 +267,7 @@ if page == "Home":
             )
     else:
         st.info("No price alerts set yet.")
+        check_price_alerts()
 
     st.subheader("📊 Market Overview")
 
