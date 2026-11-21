@@ -235,14 +235,17 @@ if page == "Home":
     st.markdown("---")
 
     st.subheader("📊 Market Overview")
-    st.markdown("---")
-st.subheader("⭐ My Watchlist")
 
-if st.session_state["watchlist"]:
-    for stock in st.session_state["watchlist"]:
-        st.write("⭐", stock)
-else:
-    st.info("Your watchlist is empty. Add your favourite companies!")
+    market_cols = st.columns(4)
+
+    st.subheader("⭐ My Watchlist")
+
+    if st.session_state["watchlist"]:
+        for stock in st.session_state["watchlist"]:
+            st.write("⭐", stock)
+    else:
+        st.info("Your watchlist is empty. Add your favourite companies!")
+
     market_cols = st.columns(4)
 
     with market_cols[0]:
