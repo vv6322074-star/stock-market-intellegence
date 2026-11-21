@@ -543,6 +543,20 @@ elif page == "Explore Companies":
 
         for insight in insights:
             st.info("💡 " + insight)
+            st.subheader("🔮 AI 7-Day Stock Price Prediction")
+
+        predictions = predict_stock_price(stock_data)
+
+        prediction_df = pd.DataFrame({
+            "Day": [f"Day {i}" for i in range(1, 8)],
+            "Predicted Price": predictions
+        })
+
+        st.dataframe(prediction_df, hide_index=True)
+
+        st.line_chart(
+            prediction_df.set_index("Day")["Predicted Price"]
+        )
         latest_price = stock_data["Close"].dropna().iloc[-1]
         st.metric("Latest Closing Price", f"{latest_price:.2f}")
         st.subheader("Stock Price History")
