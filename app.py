@@ -61,7 +61,7 @@ def check_price_alerts():
                 )
                 
 def predict_stock_price(stock_data):
-    def generate_stock_insights(stock_data, company_name):
+def generate_stock_insights(stock_data, company_name):
     close = stock_data["Close"].dropna()
 
     if len(close) < 2:
@@ -73,21 +73,15 @@ def predict_stock_price(stock_data):
     change = ((current_price - previous_price) / previous_price) * 100
 
     insights = []
-
-    insights.append(
-        f"Latest closing price: {current_price:.2f}"
-    )
-
-    insights.append(
-        f"Daily price change: {change:.2f}%"
-    )
+    insights.append(f"Latest closing price: {current_price:.2f}")
+    insights.append(f"Daily price change: {change:.2f}%")
 
     if change > 0:
-        insights.append("Positive movement compared to the previous close.")
+        insights.append("Positive movement compared to previous close.")
     elif change < 0:
-        insights.append("Negative movement compared to the previous close.")
+        insights.append("Negative movement compared to previous close.")
     else:
-        insights.append("No price change compared to the previous close.")
+        insights.append("No price change compared to previous close.")
 
     return insights
     data = stock_data[["Close"]].dropna().copy()
