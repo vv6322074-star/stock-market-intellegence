@@ -59,13 +59,6 @@ def check_price_alerts():
                 st.info(
                     f"{alert['company']}: Current ₹{current_price:.2f} | Target ₹{target_price:.2f}"
                 )
-            else:
-                st.info(
-                    
-f"{alert['company']}: Current ₹
-{current_price:.2f} | Target ₹
-{target_price:.2f}"
-                )
                 
 def predict_stock_price(stock_data):
     data = stock_data[["Close"]].dropna().copy()
