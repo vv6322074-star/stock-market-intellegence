@@ -287,6 +287,7 @@ if page == "Home":
 
 # Explore Companies
 elif page == "Explore Companies":
+    st.title("📊 Explore Companies")
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
