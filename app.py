@@ -2,6 +2,9 @@
 import streamlit as st
 import pandas as pd
 import yfinance as yf
+import random
+import smtplib
+from email.mime.text import MIMEText
 from sklearn.linear_model import LinearRegression
 companies = {
     "TCS": "TCS.NS",
