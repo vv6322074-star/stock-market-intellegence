@@ -285,6 +285,7 @@ if page == "Home":
                 "Company": name,
                 "Change (%)": change
             })
+            st.write("Available companies:", len(market_performance))
 
     if market_performance:
         st.write("Available companies:", len(market_performance))
