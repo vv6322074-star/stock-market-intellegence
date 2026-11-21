@@ -5,6 +5,19 @@ import yfinance as yf
 import random
 import smtplib
 from email.mime.text import MIMEText
+def send_otp(email, otp):
+    sender_email = st.secrets["email"]["sender_email"]
+    sender_password = st.secrets["email"]["sender_password"]
+
+    message = MIMEText(f"Your Stoxen verification OTP is: {otp}")
+    message["Subject"] = "Stoxen - Email Verification"
+    message["From"] = sender_email
+    message["To"] = email
+
+    with smtplib.SMTP("smtp.gmail.com", 587) as server:
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.send_message(message)
 from sklearn.linear_model import LinearRegression
 companies = {
     "TCS": "TCS.NS",
@@ -111,7 +124,40 @@ div[data-testid="stMetric"] {
 }
 </style>
 """, unsafe_allow_html=True)
+# Email OTP Login
+if "otp_verified" not in st.session_state:
+    st.session_state.otp_verified = False
 
+st.title("🔐 Stoxen Email Login")
+
+if not st.session_state.otp_verified:
+    email = st.text_input("Enter your Gmail address")
+
+    if st.button("Send OTP"):
+        if email and "@" in email:
+            otp = str(random.randint(100000, 999999))
+            try:
+                send_otp(email, otp)
+                st.session_state["otp"] = otp
+                st.session_state["otp_email"] = email
+                st.success("OTP sent to your email!")
+            except Exception:
+                st.error("OTP sending failed. Please check your email settings.")
+        else:
+            st.warning("Please enter a valid email address.")
+
+    if "otp" in st.session_state:
+        entered_otp = st.text_input("Enter OTP")
+
+        if st.button("Verify OTP"):
+            if entered_otp == st.session_state["otp"]:
+                st.session_state.otp_verified = True
+                st.success("Login successful!")
+                st.rerun()
+            else:
+                st.error("Incorrect OTP. Try again.")
+
+    st.stop()
 # Sidebar
 if "pending_page" in st.session_state:
     st.session_state["page_navigation"] = st.session_state.pop("pending_page")
