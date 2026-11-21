@@ -211,7 +211,8 @@ for index, (name, icon, ticker) in enumerate(company_names):
     with c1:
         st.metric(
             "TCS Price",
-            f"₹{tcs['Close'].dropna().iloc[-1]:.2f}"
+            f"₹
+{tcs['Close'].dropna().iloc[-1]:.2f}"
         )
 
     with c2:
