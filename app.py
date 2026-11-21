@@ -306,16 +306,7 @@ if page == "Home":
                 "target": target_price
             })
             st.success(f"{alert_company} price alert added!")
-    if existing_alert:
-        existing_alert["target"] = target_price
-        st.success(f"{alert_company} price alert updated!")
-    else:
-        st.session_state["price_alerts"].append({
-            "company": alert_company,
-            "target": target_price
-        })
-        st.success(f"{alert_company} price alert added!")
-
+    
     if st.session_state["watchlist"]:
         for stock in st.session_state["watchlist"]:
             st.write("⭐", stock)
