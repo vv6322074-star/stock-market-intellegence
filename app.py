@@ -317,6 +317,28 @@ if page == "Home":
 # Explore Companies
 elif page == "Explore Companies":
     st.title("📊 Explore Companies")
+    st.caption("Explore and analyse different companies.")
+
+    company_options = list(companies.keys())
+    selected_company = st.session_state.get("selected_company", "TCS")
+
+    company_name = st.selectbox(
+        "Select Company",
+        company_options,
+        index=company_options.index(selected_company)
+    )
+
+    ticker = companies[company_name]
+    stock_data = get_stock_data(ticker)
+
+    if stock_data.empty:
+        st.warning("Stock data is not available. Please try again.")
+    else:
+        st.subheader(company_name + " Stock Analysis")
+        latest_price = stock_data["Close"].dropna().iloc[-1]
+        st.metric("Latest Closing Price", f"{latest_price:.2f}")
+        st.subheader("Stock Price History")
+        st.line_chart(stock_data.set_index("Date")["Close"])
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
