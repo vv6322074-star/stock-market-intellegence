@@ -226,19 +226,52 @@ def show_analysis(df, name, currency):
     )
 
 if "watchlist" not in st.session_state:
-    st.session_state["watchlist"] = []       
+    st.session_state["watchlist"] = []  
+    if "price_alerts" not in st.session_state:
+    st.session_state["price_alerts"] = []
 # Home
 if page == "Home":
     st.title("📈 Stock Market Intelligence")
     st.caption("Your Smart Platform to Explore, Analyze & Compare Stocks")
 
     st.markdown("---")
+    st.subheader("📋 Your Active Price Alerts")
+
+    if st.session_state["price_alerts"]:
+        for alert in st.session_state["price_alerts"]:
+            st.write(
+                f"🔔 {alert['company']} - Target Price: {alert['target']:.2f}"
+            )
+    else:
+        st.info("No price alerts set yet.")
 
     st.subheader("📊 Market Overview")
 
     market_cols = st.columns(4)
 
     st.subheader("⭐ My Watchlist")
+    st.markdown("---")
+    st.subheader("🔔 Smart Price Alerts")
+
+    alert_company = st.selectbox(
+        "Select Company",
+        list(companies.keys()),
+        key="alert_company"
+    )
+
+    target_price = st.number_input(
+        "Enter Target Price",
+        min_value=0.01,
+        value=100.0,
+        key="target_price"
+    )
+
+    if st.button("Set Price Alert"):
+        st.session_state["price_alerts"].append({
+            "company": alert_company,
+            "target": target_price
+        })
+        st.success("Price alert added successfully!")
 
     if st.session_state["watchlist"]:
         for stock in st.session_state["watchlist"]:
