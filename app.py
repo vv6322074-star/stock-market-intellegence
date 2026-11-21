@@ -189,7 +189,7 @@ if page == "Home":
         ("Amazon", "📦", "AMZN")
     ]
 
-for index, (name, icon, ticker) in enumerate(company_names):
+    for index, (name, icon, ticker) in enumerate(company_names):
         with company_columns[index % 4]:
             st.markdown(
                 f"""
@@ -207,33 +207,31 @@ for index, (name, icon, ticker) in enumerate(company_names):
                 """,
                 unsafe_allow_html=True
             )
+
     c1, c2, c3, c4 = st.columns(4)
+
     with c1:
         st.metric(
             "TCS Price",
-            f"₹
-{tcs['Close'].dropna().iloc[-1]:.2f}"
+            f"₹{tcs['Close'].dropna().iloc[-1]:.2f}"
         )
 
     with c2:
         st.metric(
             "Apple Price",
-            f"$
-{apple['Close'].dropna().iloc[-1]:.2f}"
+            f"${apple['Close'].dropna().iloc[-1]:.2f}"
         )
 
     with c3:
         st.metric(
             "TCS Daily Return",
-            f"
-{tcs['Daily_Return'].dropna().iloc[-1]:.2f}%"
+            f"{tcs['Daily_Return'].dropna().iloc[-1]:.2f}%"
         )
 
     with c4:
         st.metric(
             "Apple Daily Return",
-            f"
-{apple['Daily_Return'].dropna().iloc[-1]:.2f}%"
+            f"{apple['Daily_Return'].dropna().iloc[-1]:.2f}%"
         )
 
     st.markdown("---")
@@ -286,108 +284,9 @@ for index, (name, icon, ticker) in enumerate(company_names):
         "Note: Prices are based on available historical stock data."
     )
 
+
 # Explore Companies
 elif page == "Explore Companies":
-    st.title("📊 Explore Companies")
-    st.caption("Explore stocks, track price movements and understand market risk.")
-
-    company_name = st.selectbox(
-        "Select Company",
-        list(companies.keys())
-    )
-
-    ticker = companies[company_name]
-    stock_data = get_stock_data(ticker)
-
-    if stock_data.empty:
-        st.warning("Stock data is not available right now.")
-
-    else:
-        date_column = "Date" if "Date" in stock_data.columns else "Datetime"
-
-        stock_data["Daily_Return"] = (
-            stock_data["Close"].pct_change() * 100
-        )
-
-        valid_prices = stock_data["Close"].dropna()
-
-        latest_price = valid_prices.iloc[-1]
-        previous_price = valid_prices.iloc[-2] if len(valid_prices) > 1 else latest_price
-
-        daily_change = latest_price - previous_price
-
-        daily_change_percent = (
-            (daily_change / previous_price) * 100
-            if previous_price != 0 else 0
-        )
-
-        currency = "₹" if ticker.endswith(".NS") else "$"
-
-        st.subheader(company_name + " Stock Overview")
-
-        c1, c2, c3 = st.columns(3)
-
-        with c1:
-            st.metric(
-                "Latest Available Close",
-                f"{currency}{latest_price:.2f}"
-            )
-
-        with c2:
-            st.metric(
-                "Daily Change",
-                f"{currency}{daily_change:.2f}",
-                f"{daily_change_percent:.2f}%"
-            )
-
-        with c3:
-            st.metric(
-                "Daily Volatility",
-                f"{stock_data['Daily_Return'].std():.2f}%"
-            )
-
-        st.markdown("---")
-
-        st.subheader("📈 Stock Price Trend")
-
-        st.line_chart(
-            stock_data.set_index(date_column)["Close"]
-        )
-        
-        st.markdown("---")
-        st.subheader("🤖 AI-Based 7-Day Stock Price Prediction")
-
-        predictions = predict_stock_price(stock_data)
-
-        prediction_df = pd.DataFrame({
-            "Day": [f"Day {i}" for i in range(1, 8)],
-            "Predicted Price": predictions
-        })
-
-        st.line_chart(
-            prediction_df.set_index("Day")["Predicted Price"]
-        )
-
-        st.caption(
-            "These are model-based estimates from historical prices, "
-            "not guaranteed future prices."
-        )
-        st.subheader("📊 Daily Returns")
-
-        st.line_chart(
-            stock_data.set_index(date_column)["Daily_Return"]
-        )
-
-        st.subheader("⚠️ Risk Analysis")
-
-        st.write(
-            "Daily volatility measures how much the stock returns fluctuate."
-        )
-
-        st.info(
-            "Higher volatility indicates greater price fluctuation. "
-            "This is historical analysis, not a guarantee of future performance."
-        )
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
