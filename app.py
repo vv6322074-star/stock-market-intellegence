@@ -228,7 +228,7 @@ if page == "Home":
                 """,
                 unsafe_allow_html=True
             )
-                if st.button(f"Explore      
+            if st.button(f"Explore      
 {name}", key=f"explore_{name}",
 use_container_width=True):
             
