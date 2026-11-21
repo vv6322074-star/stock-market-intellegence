@@ -218,19 +218,22 @@ for index, (name, icon, ticker) in enumerate(company_names):
     with c2:
         st.metric(
             "Apple Price",
-            f"${apple['Close'].dropna().iloc[-1]:.2f}"
+            f"$
+{apple['Close'].dropna().iloc[-1]:.2f}"
         )
 
     with c3:
         st.metric(
             "TCS Daily Return",
-            f"{tcs['Daily_Return'].dropna().iloc[-1]:.2f}%"
+            f"
+{tcs['Daily_Return'].dropna().iloc[-1]:.2f}%"
         )
 
     with c4:
         st.metric(
             "Apple Daily Return",
-            f"{apple['Daily_Return'].dropna().iloc[-1]:.2f}%"
+            f"
+{apple['Daily_Return'].dropna().iloc[-1]:.2f}%"
         )
 
     st.markdown("---")
