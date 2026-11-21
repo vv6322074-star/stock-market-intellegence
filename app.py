@@ -287,6 +287,7 @@ if page == "Home":
             })
 
     if market_performance:
+        st.write("Available companies:", len(market_performance))
         performance_df = pd.DataFrame(market_performance)
 
         gainers = performance_df.nlargest(5, "Change (%)")
