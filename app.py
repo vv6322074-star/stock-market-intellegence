@@ -61,6 +61,35 @@ def check_price_alerts():
                 )
                 
 def predict_stock_price(stock_data):
+    def generate_stock_insights(stock_data, company_name):
+    close = stock_data["Close"].dropna()
+
+    if len(close) < 2:
+        return ["Not enough stock data available."]
+
+    current_price = float(close.iloc[-1])
+    previous_price = float(close.iloc[-2])
+
+    change = ((current_price - previous_price) / previous_price) * 100
+
+    insights = []
+
+    insights.append(
+        f"Latest closing price: {current_price:.2f}"
+    )
+
+    insights.append(
+        f"Daily price change: {change:.2f}%"
+    )
+
+    if change > 0:
+        insights.append("Positive movement compared to the previous close.")
+    elif change < 0:
+        insights.append("Negative movement compared to the previous close.")
+    else:
+        insights.append("No price change compared to the previous close.")
+
+    return insights
     data = stock_data[["Close"]].dropna().copy()
 
     data["Day"] = range(len(data))
@@ -509,6 +538,15 @@ elif page == "Explore Companies":
         st.warning("Stock data is not available. Please try again.")
     else:
         st.subheader(company_name + " Stock Analysis")
+        st.subheader("🤖 AI Stock Insights")
+
+        insights = generate_stock_insights(
+            stock_data,
+            company_name
+        )
+
+        for insight in insights:
+            st.info("💡 " + insight)
         latest_price = stock_data["Close"].dropna().iloc[-1]
         st.metric("Latest Closing Price", f"{latest_price:.2f}")
         st.subheader("Stock Price History")
