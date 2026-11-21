@@ -225,8 +225,7 @@ def show_analysis(df, name, currency):
         mime="text/csv"
     )
 
-mime="text/csv"
-    )
+
 
 if "watchlist" not in st.session_state:
     st.session_state["watchlist"] = []  
