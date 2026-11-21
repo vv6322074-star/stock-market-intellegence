@@ -270,6 +270,42 @@ if page == "Home":
         check_price_alerts()
 
     st.subheader("📊 Market Overview")
+    # Market Gainers & Losers
+    st.subheader("📈 Market Gainers & Losers")
+
+    market_performance = []
+
+    for name, ticker in companies.items():
+        data = get_stock_data(ticker)
+
+        if not data.empty and len(data) >= 2:
+            previous = float(data["Close"].iloc[-2])
+            current = float(data["Close"].iloc[-1])
+
+            change = ((current - previous) / previous) * 100
+
+            market_performance.append({
+                "Company": name,
+                "Change (%)": change
+            })
+
+    if market_performance:
+        performance_df = pd.DataFrame(market_performance)
+
+        gainers = performance_df.nlargest(5, "Change (%)")
+        losers = performance_df.nsmallest(5, "Change (%)")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+            st.markdown("### 🟢 Top Gainers")
+            st.dataframe(gainers, hide_index=True)
+
+        with col2:
+            st.markdown("### 🔴 Top Losers")
+            st.dataframe(losers, hide_index=True)
+    else:
+        st.info("Market data is currently unavailable.")
 
     market_cols = st.columns(4)
 
