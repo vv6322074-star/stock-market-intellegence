@@ -91,6 +91,28 @@ def calculate_moving_averages(stock_data):
     )
 
     return data
+    def calculate_technical_indicators(stock_data):
+    data = stock_data.copy()
+
+    delta = data["Close"].diff()
+    gain = delta.clip(lower=0)
+    loss = -delta.clip(upper=0)
+
+    avg_gain = gain.rolling(window=14).mean()
+    avg_loss = loss.rolling(window=14).mean()
+
+    rs = avg_gain / avg_loss.replace(0, np.nan)
+    data["RSI"] = 100 - (100 / (1 + rs))
+
+    ema12 = data["Close"].ewm(span=12, adjust=False).mean()
+    ema26 = data["Close"].ewm(span=26, adjust=False).mean()
+
+    data["MACD"] = ema12 - ema26
+    data["MACD Signal"] = data["MACD"].ewm(
+        span=9, adjust=False
+    ).mean()
+
+    return data
 
 def generate_stock_insights(stock_data, company_name):
     close = stock_data["Close"].dropna()
@@ -557,7 +579,7 @@ elif page == "Explore Companies":
 
     else:
         stock_data = calculate_moving_averages(stock_data)
-
+        stock_data = calculate_technical_indicators(stock_data)
         st.subheader(company_name + " Stock Analysis")
         st.subheader("🤖 AI Stock Insights")
 
@@ -591,6 +613,14 @@ elif page == "Explore Companies":
         st.line_chart(stock_data.set_index("Date")["Close"])
 
         st.subheader("📈 Moving Average Analysis")
+        st.subheader("📉 RSI Analysis")
+        st.subheader("📊 MACD Analysis")
+        st.line_chart(
+            stock_data.set_index("Date")[["MACD", "MACD Signal"]]
+)
+        st.line_chart(
+            stock_data.set_index("Date")["RSI"]
+)
         st.line_chart(
             stock_data.set_index("Date")[
                 ["Close", "50-Day Moving Average", "200-Day Moving Average"]
