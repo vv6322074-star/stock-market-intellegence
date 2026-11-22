@@ -147,6 +147,11 @@ div[data-testid="stAlert"] p,
 div[data-testid="stAlert"] div {
     color: #0f172a !important;
 }
+/* Make all button text visible */
+div.stButton > button,
+div.stButton > button p {
+    color: #0f172a !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
