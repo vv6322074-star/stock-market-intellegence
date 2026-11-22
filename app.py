@@ -113,7 +113,25 @@ def calculate_technical_indicators(stock_data):
     ).mean()
 
     return data
+def generate_trading_signal(stock_data):
+    data = stock_data.copy()
 
+    data["Signal"] = "HOLD"
+
+    buy_condition = (
+        (data["RSI"] < 30) &
+        (data["MACD"] > data["MACD Signal"])
+    )
+
+    sell_condition = (
+        (data["RSI"] > 70) &
+        (data["MACD"] < data["MACD Signal"])
+    )
+
+    data.loc[buy_condition, "Signal"] = "BUY"
+    data.loc[sell_condition, "Signal"] = "SELL"
+
+    return data
 def generate_stock_insights(stock_data, company_name):
     close = stock_data["Close"].dropna()
 
@@ -580,6 +598,7 @@ elif page == "Explore Companies":
     else:
         stock_data = calculate_moving_averages(stock_data)
         stock_data = calculate_technical_indicators(stock_data)
+        stock_data = generate_trading_signal(stock_data)
         st.subheader(company_name + " Stock Analysis")
         st.subheader("🤖 AI Stock Insights")
 
@@ -615,6 +634,18 @@ elif page == "Explore Companies":
         st.subheader("📈 Moving Average Analysis")
         st.subheader("📉 RSI Analysis")
         st.subheader("📊 MACD Analysis")
+        st.subheader("🚦 Buy / Sell Signal")
+
+latest_signal = stock_data["Signal"].iloc[-1]
+
+if latest_signal == "BUY":
+    st.success("🟢 BUY Signal")
+
+elif latest_signal == "SELL":
+    st.error("🔴 SELL Signal")
+
+else:
+    st.info("🟡 HOLD Signal")
         st.line_chart(
             stock_data.set_index("Date")[["MACD", "MACD Signal"]]
 )
