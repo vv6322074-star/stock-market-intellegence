@@ -608,9 +608,9 @@ def calculate_portfolio(stock_data, quantity, buy_price):
     profit_loss = current_value - invested_amount
 
     return invested_amount, current_value, profit_loss
+       
         st.subheader(company_name + " Stock Analysis")
         st.subheader("🤖 AI Stock Insights")
-
         insights = generate_stock_insights(
             stock_data,
             company_name
