@@ -607,7 +607,7 @@ with chart_tab3:
             st.line_chart(
                 stock_data.set_index("Date")["Daily Return (%)"]
             )
-            )
+            
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
