@@ -599,6 +599,7 @@ elif page == "Explore Companies":
         stock_data = calculate_moving_averages(stock_data)
         stock_data = calculate_technical_indicators(stock_data)
         stock_data = generate_trading_signal(stock_data)
+
         st.subheader(company_name + " Stock Analysis")
         st.subheader("🤖 AI Stock Insights")
 
@@ -632,31 +633,34 @@ elif page == "Explore Companies":
         st.line_chart(stock_data.set_index("Date")["Close"])
 
         st.subheader("📈 Moving Average Analysis")
-        st.subheader("📉 RSI Analysis")
-        st.subheader("📊 MACD Analysis")
-        st.subheader("🚦 Buy / Sell Signal")
-
-latest_signal = stock_data["Signal"].iloc[-1]
-
-if latest_signal == "BUY":
-        st.success("🟢 BUY Signal")
-
-elif latest_signal == "SELL":
-        st.error("🔴 SELL Signal")
-
-else:
-        st.info("🟡 HOLD Signal")
-        st.line_chart(
-            stock_data.set_index("Date")[["MACD", "MACD Signal"]]
-)
-        st.line_chart(
-            stock_data.set_index("Date")["RSI"]
-)
         st.line_chart(
             stock_data.set_index("Date")[
                 ["Close", "50-Day Moving Average", "200-Day Moving Average"]
             ]
         )
+
+        st.subheader("📉 RSI Analysis")
+        st.line_chart(
+            stock_data.set_index("Date")["RSI"]
+        )
+
+        st.subheader("📊 MACD Analysis")
+        st.line_chart(
+            stock_data.set_index("Date")[["MACD", "MACD Signal"]]
+        )
+
+        st.subheader("🚦 Buy / Sell Signal")
+
+        latest_signal = stock_data["Signal"].iloc[-1]
+
+        if latest_signal == "BUY":
+            st.success("🟢 BUY Signal")
+
+        elif latest_signal == "SELL":
+            st.error("🔴 SELL Signal")
+
+        else:
+            st.info("🟡 HOLD Signal")
 
         st.subheader("📊 Additional Stock Charts")
 
@@ -682,13 +686,12 @@ else:
                 stock_data["Close"].pct_change() * 100
             )
             st.line_chart(
-                stock_data.set_index("Date")["Daily Return (%)"]
+            stock_data.set_index("Date")["Daily Return (%)"]
             )
 
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
-
 # Apple
 elif page == "Apple Analysis":
     show_analysis(apple, "Apple", "$")
