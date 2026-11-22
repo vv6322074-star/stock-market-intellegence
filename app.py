@@ -599,7 +599,7 @@ elif page == "Explore Companies":
         stock_data = calculate_moving_averages(stock_data)
         stock_data = calculate_technical_indicators(stock_data)
         stock_data = generate_trading_signal(stock_data)
- def calculate_portfolio(stock_data, quantity, buy_price):
+        def calculate_portfolio(stock_data, quantity, buy_price):
     latest_price = stock_data["Close"].dropna().iloc[-1]
 
     invested_amount = quantity * buy_price
