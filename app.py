@@ -574,7 +574,7 @@ if page == "Home":
         "Note: Prices are based on available historical stock data."
     )
 
-def calculate_portfolio(stock_data, quantity, buy_price)
+def calculate_portfolio(stock_data, quantity, buy_price):
     latest_price = stock_data["Close"].dropna().iloc[-1]
 
     invested_amount = quantity * buy_price
