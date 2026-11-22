@@ -362,6 +362,46 @@ if page == "Home":
         check_price_alerts()
 
     st.subheader("📊 Market Overview")
+    st.subheader("💼 Portfolio Tracker")
+
+    portfolio_company = st.selectbox(
+        "Select Company for Portfolio",
+        list(companies.keys()),
+        key="portfolio_company"
+    )
+
+    quantity = st.number_input(
+        "Enter Quantity",
+        min_value=1,
+        step=1,
+        key="portfolio_quantity"
+    )
+
+    buy_price = st.number_input(
+        "Enter Buy Price",
+        min_value=0.01,
+        step=1.0,
+        key="portfolio_buy_price"
+    )
+    portfolio_data = get_stock_data(
+        companies[portfolio_company]
+    )
+
+    if not portfolio_data.empty:
+        invested, current, profit_loss = calculate_portfolio(
+            portfolio_data,
+            quantity,
+            buy_price
+        )
+
+        col1, col2, col3 = st.columns(3)
+
+        col1.metric("Invested Amount", f"₹{invested:.2f}")
+        col2.metric("Current Value", f"₹{current:.2f}")
+        col3.metric("Profit / Loss", f"₹{profit_loss:.2f}")
+
+    else:
+        st.warning("Stock data is not available.")
     # Market Gainers & Losers
     st.subheader("📈 Market Gainers & Losers")
 
