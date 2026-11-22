@@ -79,6 +79,18 @@ def predict_stock_price(stock_data):
     predictions = model.predict(future_days)
 
     return predictions
+def calculate_moving_averages(stock_data):
+    data = stock_data.copy()
+
+    data["50-Day Moving Average"] = (
+        data["Close"].rolling(window=50).mean()
+    )
+
+    data["200-Day Moving Average"] = (
+        data["Close"].rolling(window=200).mean()
+    )
+
+    return data
 
 def generate_stock_insights(stock_data, company_name):
     close = stock_data["Close"].dropna()
@@ -529,10 +541,11 @@ elif page == "Explore Companies":
 
     ticker = companies[company_name]
     stock_data = get_stock_data(ticker)
-
+    
     if stock_data.empty:
         st.warning("Stock data is not available. Please try again.")
     else:
+        stock_data = calculate_moving_averages(stock_data)
         st.subheader(company_name + " Stock Analysis")
         st.subheader("🤖 AI Stock Insights")
 
@@ -561,6 +574,13 @@ elif page == "Explore Companies":
         st.metric("Latest Closing Price", f"{latest_price:.2f}")
         st.subheader("Stock Price History")
         st.line_chart(stock_data.set_index("Date")["Close"])
+        st.subheader("📈 Moving Average Analysis")
+
+st.line_chart(
+    stock_data.set_index("Date")[
+        ["Close", "50-Day Moving Average", "200-Day Moving Average"]
+    ]
+)
         st.subheader("📊 Additional Stock Charts")
 
         chart_tab1, chart_tab2, chart_tab3 = st.tabs([
