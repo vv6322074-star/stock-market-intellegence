@@ -589,18 +589,18 @@ chart_tab1, chart_tab2, chart_tab3 = st.tabs([
             "Daily Returns"
         ])
 
-       with chart_tab1:
+with chart_tab1:
             st.area_chart(
                 stock_data.set_index("Date")["Close"]
             )
 
-        with chart_tab2:
+with chart_tab2:
             if "Volume" in stock_data.columns:
                 st.bar_chart(
                     stock_data.set_index("Date")["Volume"]
                 )
 
-        with chart_tab3:
+with chart_tab3:
             stock_data["Daily Return (%)"] = (
                 stock_data["Close"].pct_change() * 100
             )
