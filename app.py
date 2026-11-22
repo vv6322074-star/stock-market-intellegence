@@ -583,13 +583,13 @@ st.line_chart(
 )
 st.subheader("📊 Additional Stock Charts")
 
-        chart_tab1, chart_tab2, chart_tab3 = st.tabs([
+chart_tab1, chart_tab2, chart_tab3 = st.tabs([
             "Area Chart",
             "Volume Chart",
             "Daily Returns"
         ])
 
-        with chart_tab1:
+       with chart_tab1:
             st.area_chart(
                 stock_data.set_index("Date")["Close"]
             )
@@ -606,6 +606,7 @@ st.subheader("📊 Additional Stock Charts")
             )
             st.line_chart(
                 stock_data.set_index("Date")["Daily Return (%)"]
+            )
             )
 # TCS
 elif page == "TCS Analysis":
