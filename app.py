@@ -581,7 +581,7 @@ st.line_chart(
         ["Close", "50-Day Moving Average", "200-Day Moving Average"]
     ]
 )
-        st.subheader("📊 Additional Stock Charts")
+st.subheader("📊 Additional Stock Charts")
 
         chart_tab1, chart_tab2, chart_tab3 = st.tabs([
             "Area Chart",
