@@ -91,7 +91,7 @@ def calculate_moving_averages(stock_data):
     )
 
     return data
-    def calculate_technical_indicators(stock_data):
+def calculate_technical_indicators(stock_data):
     data = stock_data.copy()
 
     delta = data["Close"].diff()
