@@ -142,6 +142,11 @@ div[data-testid="stMetric"] {
     border-radius: 12px;
     border: 1px solid #334155;
 }
+/* Make text visible inside information boxes */
+div[data-testid="stAlert"] p,
+div[data-testid="stAlert"] div {
+    color: #0f172a !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
