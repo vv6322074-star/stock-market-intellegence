@@ -599,6 +599,15 @@ elif page == "Explore Companies":
         stock_data = calculate_moving_averages(stock_data)
         stock_data = calculate_technical_indicators(stock_data)
         stock_data = generate_trading_signal(stock_data)
+ def calculate_portfolio(stock_data, quantity, buy_price):
+    latest_price = stock_data["Close"].dropna().iloc[-1]
+
+    invested_amount = quantity * buy_price
+    current_value = quantity * latest_price
+
+    profit_loss = current_value - invested_amount
+
+    return invested_amount, current_value, profit_loss
 
         st.subheader(company_name + " Stock Analysis")
         st.subheader("🤖 AI Stock Insights")
