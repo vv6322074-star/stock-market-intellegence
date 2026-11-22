@@ -639,13 +639,13 @@ elif page == "Explore Companies":
 latest_signal = stock_data["Signal"].iloc[-1]
 
 if latest_signal == "BUY":
-    st.success("🟢 BUY Signal")
+        st.success("🟢 BUY Signal")
 
 elif latest_signal == "SELL":
-    st.error("🔴 SELL Signal")
+        st.error("🔴 SELL Signal")
 
 else:
-    st.info("🟡 HOLD Signal")
+        st.info("🟡 HOLD Signal")
         st.line_chart(
             stock_data.set_index("Date")[["MACD", "MACD Signal"]]
 )
