@@ -337,6 +337,14 @@ if "price_alerts" not in st.session_state:
     st.session_state["price_alerts"] = []
 
 # Home
+def calculate_portfolio(stock_data, quantity, buy_price):
+    latest_price = stock_data["Close"].dropna().iloc[-1]
+
+    invested_amount = quantity * buy_price
+    current_value = quantity * latest_price
+    profit_loss = current_value - invested_amount
+
+    return invested_amount, current_value, profit_loss
 if page == "Home":
     st.title("📈 Stock Market Intelligence")
     st.caption("Your Smart Platform to Explore, Analyze & Compare Stocks")
@@ -574,14 +582,7 @@ if page == "Home":
         "Note: Prices are based on available historical stock data."
     )
 
-def calculate_portfolio(stock_data, quantity, buy_price):
-    latest_price = stock_data["Close"].dropna().iloc[-1]
 
-    invested_amount = quantity * buy_price
-    current_value = quantity * latest_price
-    profit_loss = current_value - invested_amount
-
-    return invested_amount, current_value, profit_loss
 # Explore Companies
 elif page == "Explore Companies":
     st.title("📊 Explore Companies")
