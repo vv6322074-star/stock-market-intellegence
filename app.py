@@ -541,11 +541,13 @@ elif page == "Explore Companies":
 
     ticker = companies[company_name]
     stock_data = get_stock_data(ticker)
-    
+
     if stock_data.empty:
         st.warning("Stock data is not available. Please try again.")
+
     else:
         stock_data = calculate_moving_averages(stock_data)
+
         st.subheader(company_name + " Stock Analysis")
         st.subheader("🤖 AI Stock Insights")
 
@@ -556,7 +558,8 @@ elif page == "Explore Companies":
 
         for insight in insights:
             st.info("💡 " + insight)
-            st.subheader("🔮 AI 7-Day Stock Price Prediction")
+
+        st.subheader("🔮 AI 7-Day Stock Price Prediction")
 
         predictions = predict_stock_price(stock_data)
 
@@ -570,44 +573,47 @@ elif page == "Explore Companies":
         st.line_chart(
             prediction_df.set_index("Day")["Predicted Price"]
         )
+
         latest_price = stock_data["Close"].dropna().iloc[-1]
         st.metric("Latest Closing Price", f"{latest_price:.2f}")
+
         st.subheader("Stock Price History")
         st.line_chart(stock_data.set_index("Date")["Close"])
+
         st.subheader("📈 Moving Average Analysis")
+        st.line_chart(
+            stock_data.set_index("Date")[
+                ["Close", "50-Day Moving Average", "200-Day Moving Average"]
+            ]
+        )
 
-st.line_chart(
-    stock_data.set_index("Date")[
-        ["Close", "50-Day Moving Average", "200-Day Moving Average"]
-    ]
-)
-st.subheader("📊 Additional Stock Charts")
+        st.subheader("📊 Additional Stock Charts")
 
-chart_tab1, chart_tab2, chart_tab3 = st.tabs([
+        chart_tab1, chart_tab2, chart_tab3 = st.tabs([
             "Area Chart",
             "Volume Chart",
             "Daily Returns"
         ])
 
-with chart_tab1:
+        with chart_tab1:
             st.area_chart(
                 stock_data.set_index("Date")["Close"]
             )
 
-with chart_tab2:
+        with chart_tab2:
             if "Volume" in stock_data.columns:
                 st.bar_chart(
                     stock_data.set_index("Date")["Volume"]
                 )
 
-with chart_tab3:
+        with chart_tab3:
             stock_data["Daily Return (%)"] = (
                 stock_data["Close"].pct_change() * 100
             )
             st.line_chart(
                 stock_data.set_index("Date")["Daily Return (%)"]
             )
-            
+
 # TCS
 elif page == "TCS Analysis":
     show_analysis(tcs, "TCS", "₹")
