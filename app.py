@@ -532,39 +532,32 @@ if page == "Home":
 
     search_query = st.text_input("Search company")
 
-    filtered_companies = [
-        company for company in company_names
-        if search_query.lower() in company[0].lower()
-    ]
+filtered_companies = [
+    company for company in company_names
+    if search_query.lower() in company[0].lower()
+]
 
-    for index, (name, icon, ticker) in enumerate(filtered_companies):
-        with company_columns[index % 4]:
-            st.markdown(
-    f"""
-    <div style="
-        background: linear-gradient(135deg, #171e46, #39216e);
-        padding: 20px;
-        border-radius: 15px;
-        border: 1px solid #8b5cf6;
-        text-align: center;
-        margin-bottom: 15px;
-    ">
-        <h3>{icon} {name}</h3>
-        <p>{ticker}</p>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-            if st.button("⭐ Add to Watchlist", key="watch_" + name):
-                if name not in st.session_state["watchlist"]:
-                    st.session_state["watchlist"].append(name)
-                    st.success(name + " added to Watchlist!")
-            if st.button("Explore " +
-                name, key="explore_" + name, use_container_width=True):
-                st.session_state["pending_page"] = "Explore Companies"
-                st.session_state["selected_company"] = name
-                st.rerun()
-            
+for start in range(0, len(filtered_companies), 4):
+    company_columns = st.columns(4)
+
+    for col, (name, icon, ticker) in zip(
+        company_columns,
+        filtered_companies[start:start + 4]
+    ):
+        with col:
+            with st.container(border=True):
+                st.subheader(f"{icon} {name}")
+                st.caption(ticker)
+
+                if st.button("⭐ Add to Watchlist", key="watch_" + name):
+                    if name not in st.session_state["watchlist"]:
+                        st.session_state["watchlist"].append(name)
+                        st.success(name + " added to Watchlist!")
+
+                if st.button("Explore " + name, key="explore_" + name):
+                    st.session_state["pending_page"] = "Explore Companies"
+                    st.session_state["selected_company"] = name
+                    st.rerun()
 
     c1, c2, c3, c4 = st.columns(4)
 
