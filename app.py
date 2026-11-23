@@ -542,6 +542,7 @@ if page == "Home":
             st.markdown(
                 f"""
                 <div style="
+                    ...
                     background: linear-gradient(135deg, #171e46, #39216e);
                     padding: 20px;
                     border-radius: 15px;
