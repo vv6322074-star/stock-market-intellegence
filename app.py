@@ -528,7 +528,7 @@ if page == "Home":
         ("Microsoft", "🪟", "MSFT"),
         ("Amazon", "📦", "AMZN")
     ]
-   st.subheader("🔍 Search Your Company")
+    st.subheader("🔍 Search Your Company")
 
     search_query = st.text_input("Search company")
 
