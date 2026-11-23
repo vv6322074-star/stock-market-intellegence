@@ -514,7 +514,7 @@ if page == "Home":
         st.metric("Prediction", "7 Days")
 
     with market_cols[3]:
-        st.metric("Data Type", "Historical")
+    st.metric("Data Type", "Historical")
     st.subheader("🏢 Explore Top Companies")
 
     company_columns = st.columns(4)
