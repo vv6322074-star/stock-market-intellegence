@@ -541,11 +541,17 @@ if page == "Home":
             st.success(f"{alert_company} price alert added!")
     
     if st.session_state["watchlist"]:
-        for stock in st.session_state["watchlist"]:
-            st.write("⭐", stock)
+        st.markdown("### ⭐ Your Favourite Stocks")
+
+        watch_cols = st.columns(3)
+
+        for index, stock in enumerate(st.session_state["watchlist"]):
+            with watch_cols[index % 3]:
+                with st.container(border=True):
+                    st.markdown(f"### ⭐ {stock}")
+                    st.caption("Added to your Watchlist")
     else:
         st.info("Your watchlist is empty. Add your favourite companies!")
-
     market_cols = st.columns(4)
 
     with market_cols[0]:
