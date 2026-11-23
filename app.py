@@ -233,6 +233,30 @@ div[data-testid="stExpander"] {
 div[data-testid="stAlert"] {
     border-radius: 10px;
 }
+/* Dashboard Cards */
+div[data-testid="stVerticalBlockBorderWrapper"] {
+    background: rgba(45, 20, 85, 0.55);
+    border: 1px solid #9333ea;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(147, 51, 234, 0.18);
+}
+
+/* Tabs */
+button[data-baseweb="tab"] {
+    color: #e9d5ff !important;
+    font-weight: 600;
+}
+
+button[data-baseweb="tab"][aria-selected="true"] {
+    color: #c084fc !important;
+    border-bottom: 3px solid #a855f7 !important;
+}
+
+/* Sidebar Text */
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2 {
+    color: #d8b4fe !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
