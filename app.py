@@ -539,18 +539,19 @@ if page == "Home":
 
     for index, (name, icon, ticker) in enumerate(filtered_companies):
         with company_columns[index % 4]:
-            st.markdown(
+        )
+        st.markdown(
                 f"""
                 <div style="
-                    background: #1e293b;
+                    background: linear-gradient(135deg, #171e46, #39216e);
                     padding: 20px;
                     border-radius: 15px;
-                    border: 1px solid #334155;
+                    border: 1px solid #8b5cf6;
                     text-align: center;
                     margin-bottom: 15px;
                 ">
-                    <h3 style="color: #60a5fa;">{icon} {name}</h3>
-                    <p style="color: #cbd5e1;">{ticker}</p>
+                    <h3>{icon} {name}</h3>
+                    <p>{ticker}</p>
                 </div>
                 """,
                 unsafe_allow_html=True
