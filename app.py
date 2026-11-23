@@ -246,25 +246,7 @@ for df in [tcs, apple]:
     df["Moving_Average"] = df["Close"].rolling(window=7).mean()
 
     df["Daily_Return"] = df["Close"].pct_change() * 100
-# Styling
-st.markdown("""
-<style>
-.stApp {
-    background: linear-gradient(135deg,#07152f,#101d3d);
-    color: white;
-}
-[data-testid="stSidebar"] {
-    background-color: #101a35;
-}
-h1, h2, h3, p, label {
-    color: white !important;
-}
-div[data-testid="stMetric"] {
-    background: #172c50;
-    padding: 18px;
-    border-radius: 12px;
-    border: 1px solid #315b91;
-}
+# Email OTP Login
 if not st.session_state.otp_verified:
 
     left, center, right = st.columns([1, 2, 1])
