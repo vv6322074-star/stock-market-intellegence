@@ -554,8 +554,7 @@ if page == "Home":
             </div>
             """,
             unsafe_allow_html=True
-        )
-            )
+                 )
             if st.button("⭐ Add to Watchlist", key="watch_" + name):
                 if name not in st.session_state["watchlist"]:
                     st.session_state["watchlist"].append(name)
