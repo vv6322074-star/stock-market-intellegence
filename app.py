@@ -504,7 +504,7 @@ if page == "Home":
     else:
         st.info("Market data is currently unavailable.")
 
-    market_cols = st.columns(4)
+  
 
     st.subheader("⭐ My Watchlist")
     st.markdown("---")
