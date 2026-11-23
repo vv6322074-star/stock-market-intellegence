@@ -164,7 +164,8 @@ st.set_page_config(
     page_icon="📈",
     layout="wide"
 ) 
-
+if "otp_verified" not in st.session_state:
+    st.session_state["otp_verified"] = False
 st.markdown("""
 <style>
 
@@ -233,6 +234,8 @@ div[data-testid="stExpander"] {
 div[data-testid="stAlert"] {
     border-radius: 10px;
 }
+</style>
+""", unsafe_allow_html=True)
 
 
 
@@ -379,7 +382,8 @@ if page == "Home":
             )
     else:
         st.info("No price alerts set yet.")
-        check_price_alerts()
+
+    check_price_alerts()
 
     st.subheader("📊 Market Overview")
     st.subheader("💼 Portfolio Tracker")
@@ -514,7 +518,7 @@ if page == "Home":
         st.metric("Prediction", "7 Days")
 
     with market_cols[3]:
-    st.metric("Data Type", "Historical")
+        st.metric("Data Type", "Historical")
     st.subheader("🏢 Explore Top Companies")
 
     company_columns = st.columns(4)
@@ -532,32 +536,32 @@ if page == "Home":
 
     search_query = st.text_input("Search company")
 
-filtered_companies = [
-    company for company in company_names
-    if search_query.lower() in company[0].lower()
-]
+    filtered_companies = [
+        company for company in company_names
+        if search_query.lower() in company[0].lower()
+    ]
 
-for start in range(0, len(filtered_companies), 4):
-    company_columns = st.columns(4)
+    for start in range(0, len(filtered_companies), 4):
+        company_columns = st.columns(4)
 
-    for col, (name, icon, ticker) in zip(
-        company_columns,
-        filtered_companies[start:start + 4]
-    ):
-        with col:
-            with st.container(border=True):
-                st.subheader(f"{icon} {name}")
-                st.caption(ticker)
+        for col, (name, icon, ticker) in zip(
+            company_columns,
+            filtered_companies[start:start + 4]
+        ):
+            with col:
+                with st.container(border=True):
+                    st.subheader(f"{icon} {name}")
+                    st.caption(ticker)
 
-                if st.button("⭐ Add to Watchlist", key="watch_" + name):
-                    if name not in st.session_state["watchlist"]:
-                        st.session_state["watchlist"].append(name)
-                        st.success(name + " added to Watchlist!")
+                    if st.button("⭐ Add to Watchlist", key="watch_" + name):
+                        if name not in st.session_state["watchlist"]:
+                            st.session_state["watchlist"].append(name)
+                            st.success(name + " added to Watchlist!")
 
-                if st.button("Explore " + name, key="explore_" + name):
-                    st.session_state["pending_page"] = "Explore Companies"
-                    st.session_state["selected_company"] = name
-                    st.rerun()
+                    if st.button("Explore " + name, key="explore_" + name):
+                        st.session_state["pending_page"] = "Explore Companies"
+                        st.session_state["selected_company"] = name
+                        st.rerun()
 
     c1, c2, c3, c4 = st.columns(4)
 
@@ -846,6 +850,6 @@ elif page == "About Project":
 
     **Technologies Used:**
     Python, Pandas, Matplotlib, Streamlit
-        """)
+    """)
 
     st.success("Stock Price Analysis Using Python")
