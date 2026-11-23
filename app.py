@@ -546,20 +546,23 @@ if page == "Home":
     else:
         st.info("Your watchlist is empty. Add your favourite companies!")
 
-    market_cols = st.columns(4)
+   market_cols = st.columns(4)
 
     with market_cols[0]:
-        st.metric("Companies Tracked", "7")
+        with st.container(border=True):
+            st.metric("🏢 Companies Tracked", "7")
 
     with market_cols[1]:
-        st.metric("Analysis Period", "1 Year")
+        with st.container(border=True):
+            st.metric("📅 Analysis Period", "1 Year")
 
     with market_cols[2]:
-        st.metric("Prediction", "7 Days")
+        with st.container(border=True):
+            st.metric("🔮 Prediction", "7 Days")
 
     with market_cols[3]:
-        st.metric("Data Type", "Historical")
-    st.subheader("🏢 Explore Top Companies")
+        with st.container(border=True):
+            st.metric("📊 Data Type", "Historical")
 
     company_columns = st.columns(4)
 
