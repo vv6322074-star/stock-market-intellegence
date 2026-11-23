@@ -171,8 +171,7 @@ st.markdown("""
 
 /* Main Background */
 .stApp {
-    background: linear-gradient(135deg, #080d27, #171044, #25105c);
-    color: #ffffff;
+   background: linear-gradient(135deg, #16052e, #3b0764, #6b21a8, #1e1b4b);
 }
 
 /* Headings */
