@@ -392,8 +392,25 @@ def calculate_portfolio(stock_data, quantity, buy_price):
 
     return invested_amount, current_value, profit_loss
 if page == "Home":
-    st.title("📈 Stock Market Intelligence")
-    st.caption("Your Smart Platform to Explore, Analyze & Compare Stocks")
+    st.markdown("""
+<div style="
+    background: linear-gradient(120deg, #2e1065, #6d28d9, #4c1d95);
+    padding: 35px;
+    border-radius: 20px;
+    border: 1px solid #a78bfa;
+    margin-bottom: 25px;
+">
+    <h1 style="color: white; font-size: 38px;">
+        📈 STOXEN
+    </h1>
+    <p style="color: #ede9fe; font-size: 18px;">
+        Your Smart Stock Market Intelligence Platform
+    </p>
+    <p style="color: #ddd6fe;">
+        Explore • Analyze • Compare • Predict
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
     st.markdown("---")
     st.subheader("📋 Your Active Price Alerts")
