@@ -546,7 +546,7 @@ if page == "Home":
     else:
         st.info("Your watchlist is empty. Add your favourite companies!")
 
-   market_cols = st.columns(4)
+    market_cols = st.columns(4)
 
     with market_cols[0]:
         with st.container(border=True):
