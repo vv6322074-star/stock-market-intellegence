@@ -846,6 +846,6 @@ elif page == "About Project":
 
     **Technologies Used:**
     Python, Pandas, Matplotlib, Streamlit
-    """)
+        """)
 
     st.success("Stock Price Analysis Using Python")
