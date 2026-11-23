@@ -234,8 +234,6 @@ div[data-testid="stAlert"] {
     border-radius: 10px;
 }
 
-</style>
-""", unsafe_allow_html=True)
 
 
 # Load data
@@ -267,40 +265,39 @@ div[data-testid="stMetric"] {
     border-radius: 12px;
     border: 1px solid #315b91;
 }
-</style>
-""", unsafe_allow_html=True)
-# Email OTP Login
-if "otp_verified" not in st.session_state:
-    st.session_state.otp_verified = False
-
-st.title("🔐 Stoxen Email Login")
-
 if not st.session_state.otp_verified:
-    email = st.text_input("Enter your Gmail address")
 
-    if st.button("Send OTP"):
-        if email and "@" in email:
-            otp = str(random.randint(100000, 999999))
-            try:
-                send_otp(email, otp)
-                st.session_state["otp"] = otp
-                st.session_state["otp_email"] = email
-                st.success("OTP sent to your email!")
-            except Exception:
-                st.error("OTP sending failed. Please check your email settings.")
-        else:
-            st.warning("Please enter a valid email address.")
+    left, center, right = st.columns([1, 2, 1])
 
-    if "otp" in st.session_state:
-        entered_otp = st.text_input("Enter OTP")
+    with center:
+        st.markdown("### Welcome to Stoxen")
+        st.write("Login using your Gmail address")
 
-        if st.button("Verify OTP"):
-            if entered_otp == st.session_state["otp"]:
-                st.session_state.otp_verified = True
-                st.success("Login successful!")
-                st.rerun()
+        email = st.text_input("Enter your Gmail address")
+
+        if st.button("Send OTP", use_container_width=True):
+            if email and "@" in email:
+                otp = str(random.randint(100000, 999999))
+                try:
+                    send_otp(email, otp)
+                    st.session_state["otp"] = otp
+                    st.session_state["otp_email"] = email
+                    st.success("OTP sent to your email!")
+                except Exception:
+                    st.error("OTP sending failed. Please check your email settings.")
             else:
-                st.error("Incorrect OTP. Try again.")
+                st.warning("Please enter a valid email address.")
+
+        if "otp" in st.session_state:
+            entered_otp = st.text_input("Enter OTP")
+
+            if st.button("Verify OTP", use_container_width=True):
+                if entered_otp == st.session_state["otp"]:
+                    st.session_state.otp_verified = True
+                    st.success("Login successful!")
+                    st.rerun()
+                else:
+                    st.error("Incorrect OTP. Try again.")
 
     st.stop()
 # Sidebar
