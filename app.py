@@ -167,34 +167,75 @@ st.set_page_config(
 
 st.markdown("""
 <style>
+
+/* Main Background */
 .stApp {
-    background: linear-gradient(135deg, #0f172a, #172554);
-    color: white;
+    background: linear-gradient(135deg, #080d27, #171044, #25105c);
+    color: #ffffff;
 }
 
+/* Headings */
 h1, h2, h3 {
-    color: #60a5fa;
+    color: #c4b5fd !important;
+    font-weight: 700;
 }
 
+/* Paragraphs and Labels */
+p, label, span {
+    color: #e2e8f0;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #111638, #25105c);
+}
+
+/* Metric Cards */
 div[data-testid="stMetric"] {
-    background: #1e293b;
+    background: linear-gradient(135deg, #171e46, #39216e);
     padding: 20px;
+    border-radius: 15px;
+    border: 1px solid #8b5cf6;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.2);
+}
+
+/* Buttons */
+div.stButton > button {
+    background: linear-gradient(90deg, #7c3aed, #4f46e5);
+    color: white !important;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+div.stButton > button:hover {
+    background: linear-gradient(90deg, #9333ea, #6366f1);
+    border: 1px solid #c4b5fd;
+}
+
+/* Input Fields */
+input, textarea {
+    background-color: #171e46 !important;
+    color: white !important;
+    border: 1px solid #8b5cf6 !important;
+    border-radius: 8px !important;
+}
+
+/* Expanders */
+div[data-testid="stExpander"] {
+    background: #171e46;
+    border: 1px solid #7c3aed;
     border-radius: 12px;
-    border: 1px solid #334155;
 }
-/* Make text visible inside information boxes */
-div[data-testid="stAlert"] p,
-div[data-testid="stAlert"] div {
-    color: #0f172a !important;
+
+/* Alerts */
+div[data-testid="stAlert"] {
+    border-radius: 10px;
 }
-/* Make all button text visible */
-div.stButton > button,
-div.stButton > button p {
-    color: #0f172a !important;
-}
+
 </style>
 """, unsafe_allow_html=True)
-
 
 
 # Load data
