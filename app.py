@@ -508,38 +508,109 @@ if page == "Home":
 
     st.subheader("⭐ My Watchlist")
     st.markdown("---")
-    st.subheader("🔔 Smart Price Alerts")
+  # ================= SMART PRICE ALERTS =================
 
+st.markdown("""
+<style>
+.alert-box {
+    background: linear-gradient(135deg, #241044, #432078);
+    padding: 25px;
+    border-radius: 18px;
+    border: 1px solid #7045A5;
+    margin-bottom: 20px;
+}
+
+.alert-title {
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.alert-subtitle {
+    color: #D8C8F5;
+    font-size: 14px;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+st.markdown("""
+<div class="alert-box">
+    <div class="alert-title">🔔 Smart Price Alerts</div>
+    <div class="alert-subtitle">
+        Set your target price and track your favourite stocks.
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+
+col1, col2 = st.columns(2)
+
+with col1:
     alert_company = st.selectbox(
-        "Select Company",
+        "🏢 Select Company",
         list(companies.keys()),
         key="alert_company"
     )
 
+with col2:
     target_price = st.number_input(
-        "Enter Target Price",
+        "🎯 Enter Target Price (₹)",
         min_value=0.01,
         value=100.0,
+        step=1.0,
         key="target_price"
     )
 
-    if st.button("Set Price Alert"):
-        existing_alert = next(
-            (alert for alert in st.session_state["price_alerts"]
-             if alert["company"] == alert_company),
-            None
-        )
 
-        if existing_alert:
-            existing_alert["target"] = target_price
-            st.success(f"{alert_company} price alert updated!")
-        else:
-            st.session_state["price_alerts"].append({
-                "company": alert_company,
-                "target": target_price
-            })
-            st.success(f"{alert_company} price alert added!")
-    
+if st.button("➕ Set Price Alert", use_container_width=True):
+
+    existing_alert = next(
+        (alert for alert in st.session_state["price_alerts"]
+         if alert["company"] == alert_company),
+        None
+    )
+
+    if existing_alert:
+        existing_alert["target"] = target_price
+        st.success(f"✅ {alert_company} alert updated!")
+
+    else:
+        st.session_state["price_alerts"].append({
+            "company": alert_company,
+            "target": target_price
+        })
+
+        st.success(f"✅ {alert_company} alert added!")
+
+
+# Display Existing Alerts
+
+st.markdown("### 📋 Your Active Alerts")
+
+if st.session_state["price_alerts"]:
+
+    for i, alert in enumerate(st.session_state["price_alerts"]):
+
+        with st.container(border=True):
+
+            col1, col2 = st.columns([2, 1])
+
+            with col1:
+                st.markdown(f"**🏢 {alert['company']}**")
+                st.caption("Stock Price Target")
+
+            with col2:
+                st.metric(
+                    "Target Price",
+                    f"₹{alert['target']:,.2f}"
+                )
+
+else:
+    st.info("No price alerts yet. Create your first alert!")
+
+# ======================================================
     if st.session_state["watchlist"]:
         st.markdown("### ⭐ Your Favourite Stocks")
 
